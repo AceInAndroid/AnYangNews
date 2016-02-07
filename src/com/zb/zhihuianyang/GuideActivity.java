@@ -182,7 +182,7 @@ public class GuideActivity extends Activity implements android.view.View.OnClick
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
 		case R.id.button1:
-			//记录引导状态 bu再展示
+			//记录引导状态 不再展示
 			PrefUtils.putBoolean("is_guide_show", true, this);
 			startActivity(new Intent(this,MainActivity.class));
 			finish();

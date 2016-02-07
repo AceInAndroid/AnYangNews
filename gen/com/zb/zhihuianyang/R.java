@@ -25,22 +25,47 @@ public final class R {
         public static final int splash_bg_newyear=0x7f020008;
         public static final int splash_horse_newyear=0x7f020009;
         public static final int splash_monkey_newyear=0x7f02000a;
-        public static final int txt_btn_guide_selector2=0x7f02000b;
+        public static final int tab_01=0x7f02000b;
+        public static final int tab_02=0x7f02000c;
+        public static final int tab_03=0x7f02000d;
+        public static final int tab_04=0x7f02000e;
+        public static final int tab_05=0x7f02000f;
+        public static final int txt_btn_guide_selector2=0x7f020010;
     }
     public static final class id {
         public static final int button1=0x7f070004;
-        public static final int imageView1=0x7f070007;
+        public static final int find=0x7f07000d;
+        public static final int ib_find=0x7f07000e;
+        public static final int ib_me=0x7f070011;
+        public static final int ib_news=0x7f070008;
+        public static final int ib_video=0x7f07000b;
+        public static final int id_content=0x7f070006;
+        public static final int imageView1=0x7f070014;
         public static final int iv_red_point=0x7f070003;
         public static final int linearLayout1=0x7f070002;
+        public static final int me=0x7f070010;
+        public static final int news=0x7f070007;
         public static final int relativelaout1=0x7f070001;
-        public static final int rlRoot=0x7f070006;
+        public static final int rlRoot=0x7f070013;
         public static final int start=0x7f070005;
+        public static final int textView1=0x7f070015;
+        public static final int tv_find=0x7f07000f;
+        public static final int tv_me=0x7f070012;
+        public static final int tv_news=0x7f070009;
+        public static final int tv_video=0x7f07000c;
+        public static final int video=0x7f07000a;
         public static final int vp_paper=0x7f070000;
     }
     public static final class layout {
         public static final int activity_guide=0x7f030000;
         public static final int activity_main=0x7f030001;
-        public static final int splash_layout=0x7f030002;
+        public static final int bottom=0x7f030002;
+        public static final int splash_layout=0x7f030003;
+        public static final int tab01=0x7f030004;
+        public static final int tab02=0x7f030005;
+        public static final int tab03=0x7f030006;
+        public static final int tab04=0x7f030007;
+        public static final int top=0x7f030008;
     }
     public static final class string {
         public static final int app_name=0x7f040000;
