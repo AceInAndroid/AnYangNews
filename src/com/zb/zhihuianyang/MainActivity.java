@@ -1,7 +1,12 @@
 package com.zb.zhihuianyang;
 
+
+
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 import com.zb.zhihuianyang.model.FindFragment;
 import com.zb.zhihuianyang.model.MeFragment;
+import com.zb.zhihuianyang.model.MenuListPager;
 import com.zb.zhihuianyang.model.NewsFragment;
 import com.zb.zhihuianyang.model.VideosFragment;
 
@@ -16,11 +21,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 
+
+
 /* 
  * ace in 20160207
  */
 
-public class MainActivity extends FragmentActivity implements OnClickListener {
+public class MainActivity extends SlidingFragmentActivity implements OnClickListener {
 	private LinearLayout mNews;
 	private LinearLayout mVideos;
 	private LinearLayout mFind;
@@ -30,16 +37,19 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	private Fragment mTab02;
 	private Fragment mTab03;
 	private Fragment mTab04;
+	
+	private static final String TAG_LEFT_MENU = "TAG_LEFT_MENU";
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
+	public void onCreate(Bundle savedInstanceState) {
+		// 初始化
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		initView();
 		initEvents();
+		setFrag(0);
 	}
 
 	private void initEvents() {
@@ -58,18 +68,41 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		mFind = (LinearLayout) findViewById(R.id.find);
 		mMe = (LinearLayout) findViewById(R.id.me);
 		
-
+//		//初始化侧滑菜单
+//		// 添加侧边栏
+//		
+		setBehindContentView(R.layout.left_menu);
+		SlidingMenu slidingMenu = getSlidingMenu();
+		// 全屏触摸
+		slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+		// 屏幕预留200像素
+		slidingMenu.setBehindOffset(200);
+		initfragment();
+		
+		
 	}
+
+	private void initfragment() {
+		// TODO Auto-generated method stub
+		//获得事务
+		FragmentManager fm = getSupportFragmentManager();
+		//开启事务
+		FragmentTransaction transaction = fm.beginTransaction();
+		transaction.replace(R.id.fl_left_menu, new MenuListPager(),TAG_LEFT_MENU);
+		transaction.commit();
+	}
+	
+	
 
 	// 设置点击事件
 	@Override
 	public void onClick(View v) {
-
+		
 		resetBackground();
 		switch (v.getId()) {
 		case R.id.news:
 			setFrag(0);
-
+		
 			mNews.setBackgroundColor(Color.parseColor("#E6E6E6"));
 			break;
 		case R.id.video:
@@ -109,6 +142,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		case 0:
 			if (mTab01 == null) {
 				mTab01 = new NewsFragment();
+				
 				transaction.add(R.id.id_content, mTab01);
 			} else {
 				transaction.show(mTab01);
@@ -165,6 +199,13 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 			transaction.hide(mTab04);
 		}
 
+	}
+	
+	
+	public MenuListPager getLeftMenuFragment() {
+		FragmentManager fm = getSupportFragmentManager();
+		MenuListPager fragment = (MenuListPager) fm.findFragmentByTag(TAG_LEFT_MENU);
+		return fragment;
 	}
 
 }
