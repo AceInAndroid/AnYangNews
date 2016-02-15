@@ -19,6 +19,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.Window;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 
@@ -38,6 +39,8 @@ public class MainActivity extends SlidingFragmentActivity implements OnClickList
 	private Fragment mTab03;
 	private Fragment mTab04;
 	
+	private ImageButton topMenu;
+	
 	private static final String TAG_LEFT_MENU = "TAG_LEFT_MENU";
 
 	@Override
@@ -50,17 +53,22 @@ public class MainActivity extends SlidingFragmentActivity implements OnClickList
 		initView();
 		initEvents();
 		setFrag(0);
+		
 	}
-
+	/**
+	 * 初始化事件
+	 */
 	private void initEvents() {
 		// TODO Auto-generated method stub
 		mNews.setOnClickListener(this);
 		mMe.setOnClickListener(this);
 		mFind.setOnClickListener(this);
 		mVideos.setOnClickListener(this);
-
+		topMenu.setOnClickListener(this);
 	}
-
+	/**
+	 * 初始化界面
+	 */
 	private void initView() {
 		// TODO Auto-generated method stub
 		mNews = (LinearLayout) findViewById(R.id.news);
@@ -68,15 +76,20 @@ public class MainActivity extends SlidingFragmentActivity implements OnClickList
 		mFind = (LinearLayout) findViewById(R.id.find);
 		mMe = (LinearLayout) findViewById(R.id.me);
 		
-//		//初始化侧滑菜单
-//		// 添加侧边栏
-//		
+		
+		topMenu = (ImageButton) findViewById(R.id.top_menu);
+		
+		
+		
+		//初始化侧滑菜单
+		// 添加侧边栏
+		
 		setBehindContentView(R.layout.left_menu);
 		SlidingMenu slidingMenu = getSlidingMenu();
 		// 全屏触摸
 		slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-		// 屏幕预留200像素
-		slidingMenu.setBehindOffset(200);
+		// 屏幕预留250像素
+		slidingMenu.setBehindOffset(250);
 		initfragment();
 		
 		
@@ -118,6 +131,12 @@ public class MainActivity extends SlidingFragmentActivity implements OnClickList
 			setFrag(3);
 			mMe.setBackgroundColor(Color.parseColor("#E6E6E6"));
 			break;
+			
+		case R.id.top_menu:
+			getLeftMenuFragment().toggle();
+			
+		
+		break;
 
 		default:
 			break;

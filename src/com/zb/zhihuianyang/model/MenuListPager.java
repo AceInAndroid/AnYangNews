@@ -4,7 +4,8 @@ package com.zb.zhihuianyang.model;
 
 import java.util.ArrayList;
 
-
+import com.zb.zhihuianyang.MainActivity ;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.zb.zhihuianyang.R;
@@ -41,8 +42,15 @@ public class MenuListPager extends BaseFragment {
 		});
 		return view;
 	}
-	
-	
+	/**
+	 * 侧边栏展开或者收起的方法
+	 */
+	public void toggle() {
+		MainActivity mainUI = (MainActivity) mActivity;
+		SlidingMenu slidingMenu = mainUI.getSlidingMenu();
+		slidingMenu.toggle();// 开关(如果状态为开,它就关;如果状态为关,它就开)
+	}
+	 
 	public void setData(ArrayList<NewsDatas> data){
 
 		mMenuList = data;

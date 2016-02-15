@@ -22,6 +22,7 @@ import com.zb.zhihuianyang.contens.Contants;
 import com.zb.zhihuianyang.domain.NewsMenuData;
 import com.zb.zhihuianyang.domain.NewsMenuData.NewsTabDatas;
 import com.zb.zhihuianyang.model.newstabpages.TabDetailPagers;
+import com.zb.zhihuianyang.utils.CacheUtils;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,20 +38,19 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class NewsFragment extends BaseFragment implements OnPageChangeListener  {
+public class NewsFragment extends BaseFragment implements OnPageChangeListener {
 
 	private NewsMenuData newsMenuData;
-	
+
 	private ViewPager mViewPager;
-	
+
 	private PageIndicator mPageIndicator;
-	
+
 	private ArrayList<NewsTabDatas> mTabList;// 页签网络数据集合
 	private ArrayList<TabDetailPagers> mTabPagers;// 页签页面集合
 
-
 	private View view;
-	
+
 	@Override
 	public View initView() {
 		view = View.inflate(mActivity, R.layout.tab01, null);
@@ -57,14 +58,20 @@ public class NewsFragment extends BaseFragment implements OnPageChangeListener  
 		mPageIndicator = (PageIndicator) view.findViewById(R.id.indicator);
 		return view;
 	}
-	
+
 	@Override
 	public void initData() {
 		// TODO Auto-generated method stub
 		super.initData();
-		getDataFromSevice();
+		String cache = CacheUtils.getCache(Contants.CATEGORIES_URL, mActivity);
+		if (!TextUtils.isEmpty(cache)) {// 用工具类TextUtils判断cache是否为空
+			processResult(cache);
+		} else {
+			getDataFromSevice();
+		}
 
 	}
+
 	/**
 	 * 从服务器获取数据
 	 */
@@ -75,59 +82,61 @@ public class NewsFragment extends BaseFragment implements OnPageChangeListener  
 			@Override
 			public void onSuccess(ResponseInfo<String> responseInfo) {
 				// 请求成功调用
-				String result = responseInfo.result;//获得json字符串
-				
+				String result = responseInfo.result;// 获得json字符串
+
 				processResult(result);
+				CacheUtils.setCache(Contants.CATEGORIES_URL, result, mActivity);
 			}
 
 			@Override
 			public void onFailure(HttpException error, String msg) {
 				// 请求失败调用
 				error.printStackTrace();
-				Toast.makeText(mActivity, msg, Toast.LENGTH_LONG)
-						.show();
-				
+				Toast.makeText(mActivity, msg, Toast.LENGTH_LONG).show();
+
 			}
 		});
-		
 	}
+
 	/**
 	 * 解析JSON字符串
+	 * 
 	 * @param result
 	 */
 
 	protected void processResult(String result) {
 		// 解析JSON
-		
-		
+
 		Gson gson = new Gson();
 		newsMenuData = gson.fromJson(result, NewsMenuData.class);
 
-		//拿到侧边栏对象
-		MainActivity myMainActivity = (MainActivity)mActivity;
+		// 拿到侧边栏对象
+		MainActivity myMainActivity = (MainActivity) mActivity;
 		MenuListPager menuListPager = myMainActivity.getLeftMenuFragment();
-		//给侧边栏ListView设计数据
+		// 给侧边栏ListView设计数据
 		menuListPager.setData(newsMenuData.data);
-		
-		mTabList=newsMenuData.data.get(0).children;
 
-		Toast.makeText(myMainActivity, mTabList.toString(), Toast.LENGTH_LONG).show();
-		initViewPagerData();
-		
-		
+		mTabList = newsMenuData.data.get(0).children;
+
+		// Toast.makeText(myMainActivity, mTabList.toString(),
+		// Toast.LENGTH_LONG).show();
+		if (mTabList != null) {
+			initViewPagerData();
+		} else {
+			Toast.makeText(myMainActivity, "mTabList是空哒请检查服务器", Toast.LENGTH_LONG).show();
+		}
+
 	}
 
-
 	private void initViewPagerData() {
-		// TODO Auto-generated method stub
+
 		// 初始化12个页签
-	
 		mTabPagers = new ArrayList<TabDetailPagers>();
 		for (NewsTabDatas tabData : mTabList) {
 			// 创建一个页签对象
 			TabDetailPagers pager = new TabDetailPagers(mActivity, tabData);
 			mTabPagers.add(pager);
-			}
+		}
 		mViewPager.setAdapter(new NewsMenuAdapter());
 
 		// 此方法在viewpager设置完数据之后再调用
@@ -135,8 +144,7 @@ public class NewsFragment extends BaseFragment implements OnPageChangeListener  
 		mPageIndicator.setOnPageChangeListener(this);// 当viewpager和指针绑定时,需要将页面切换监听设置给指针
 	}
 
-
-	class NewsMenuAdapter extends PagerAdapter{
+	class NewsMenuAdapter extends PagerAdapter {
 
 		@Override
 		public int getCount() {
@@ -149,23 +157,23 @@ public class NewsFragment extends BaseFragment implements OnPageChangeListener  
 			// TODO Auto-generated method stub
 			return view == object;
 		}
-		
+
 		@Override
 		public Object instantiateItem(ViewGroup container, int position) {
-			
+
 			TabDetailPagers pager = mTabPagers.get(position);
 			container.addView(pager.mRootView);
 			pager.initData();
 			return pager.mRootView;
 		}
-		
+
 		@Override
 		public void destroyItem(ViewGroup container, int position, Object object) {
 			// TODO Auto-generated method stub
 			container.removeView((View) object);
-			
+
 		}
-		
+
 		@Override
 		public CharSequence getPageTitle(int position) {
 			// TODO Auto-generated method stub
@@ -173,11 +181,10 @@ public class NewsFragment extends BaseFragment implements OnPageChangeListener  
 		}
 	}
 
-
 	@Override
 	public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -196,9 +203,9 @@ public class NewsFragment extends BaseFragment implements OnPageChangeListener  
 	@Override
 	public void onPageScrollStateChanged(int state) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	/**
 	 * 设置侧边栏可用不可用
 	 * 
@@ -214,6 +221,6 @@ public class NewsFragment extends BaseFragment implements OnPageChangeListener  
 			// 禁用掉侧边栏滑动效果
 			slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
 		}
-	}	
+	}
 
 }
