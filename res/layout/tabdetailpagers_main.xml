@@ -4,10 +4,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <ListView
+    <com.zb.zhihuianyang.view.MyRefreshListView
         android:id="@+id/tab_detailpage_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
-    </ListView>
+    </com.zb.zhihuianyang.view.MyRefreshListView>
 
 </LinearLayout>
