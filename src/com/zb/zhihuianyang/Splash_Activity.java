@@ -24,9 +24,8 @@ public class Splash_Activity extends Activity {
 		setContentView(R.layout.splash_layout);
 		rlRoot = (RelativeLayout) findViewById(R.id.rlRoot);
 		
-		//Ðý×ª£¬Ëõ·Å£¬½¥±ä
-		RotateAnimation animation = new RotateAnimation(0, 360, 
-				Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+		//ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½Å£ï¿½ï¿½ï¿½ï¿½ï¿½
+		RotateAnimation animation = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
 		animation.setDuration(1000);
 		animation.setFillAfter(true);
 		ScaleAnimation aScaleAnimation = new ScaleAnimation(0, 1, 0, 1,Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
@@ -38,7 +37,7 @@ public class Splash_Activity extends Activity {
 		alphaAnimation.setFillAfter(true);
 		
 		
-		//¶¯»­¼¯ºÏ
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		
 		AnimationSet aSet = new AnimationSet(true);
 		aSet.addAnimation(animation);
@@ -63,15 +62,15 @@ public class Splash_Activity extends Activity {
 			@Override
 			public void onAnimationEnd(Animation animation) {
 				// TODO Auto-generated method stub
-				//ÅÐ¶ÏÊÇ·ñÐèÒªÌøµ½ÐÂÊÖÒýµ¼½çÃæ
+				//ï¿½Ð¶ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				Boolean isGuideShow = PrefUtils.getBoolean("is_guide_show", false, getApplicationContext());
 				if(isGuideShow){
-					//¶¯»­½áÊøºóÌøµ½Ö÷Ò³Ãæ
+					//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò³ï¿½ï¿½
 					startActivity(new Intent(getApplicationContext(),
 							MainActivity.class));
 					
 				}else {
-					//Ìøµ½ÐÂÊÖÒýµ¼½çÃæ
+					//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 					startActivity(new Intent(getApplicationContext(),
 							GuideActivity.class));
 				}

@@ -56,6 +56,7 @@ public class NewsFragment extends BaseFragment implements OnPageChangeListener {
 		view = View.inflate(mActivity, R.layout.tab01, null);
 		mViewPager = (ViewPager) view.findViewById(R.id.news_viewpager);
 		mPageIndicator = (PageIndicator) view.findViewById(R.id.indicator);
+		
 		return view;
 	}
 

@@ -21,7 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MyRefreshListView extends ListView
-		implements OnScrollListener, android.widget.AdapterView.OnItemClickListener {
+		implements OnScrollListener,android.widget.AdapterView.OnItemClickListener {
 
 	private static final int STATE_PULL_TO_REFRESH = 1;// 下拉刷新
 	private static final int STATE_RELEASE_TO_REFRESH = 2;// 松开刷新
@@ -270,11 +270,27 @@ public class MyRefreshListView extends ListView
 		}
 	}
 
+	private OnItemClickListener mItemClickListener;
+	
+	// 重写item点击方法
 	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		// TODO Auto-generated method stub
-
+	public void setOnItemClickListener(
+			android.widget.AdapterView.OnItemClickListener listener) {
+		mItemClickListener = listener;
+		super.setOnItemClickListener(this);// 将点击事件设置给当前的RefreshListView
 	}
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		if (mItemClickListener != null) {
+			mItemClickListener.onItemClick(parent, view, position
+					- getHeaderViewsCount(), id);
+		}
+	}
+	
+	
+
 
 	@Override
 	public void onScrollStateChanged(AbsListView view, int scrollState) {
