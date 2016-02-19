@@ -33,7 +33,7 @@ public class TopNewsViewPager extends ViewPager {
 	 */
 	@Override
 	public boolean dispatchTouchEvent(MotionEvent ev) {
-	
+		getParent().requestDisallowInterceptTouchEvent(true);
 		switch (ev.getAction()) {
 		case MotionEvent.ACTION_DOWN:
 			startX = (int) ev.getX();

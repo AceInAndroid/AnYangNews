@@ -36,13 +36,18 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class VideosFragment extends BaseFragment implements  android.view.View.OnClickListener {
+/**
+ * 视频图片模块
+ * @author Ace
+ *
+ */
+public class VideosFragment extends BaseFragment implements android.view.View.OnClickListener {
 
 	@ViewInject(R.id.Photo_lv_list)
 	private ListView lvList;
 	@ViewInject(R.id.Photo_gv_list)
 	private GridView gvList;
-	
+
 	private ImageButton mGridView;
 	// 图片列表数据
 	private ArrayList<PhotoNewsDatas> mPhotoList;
@@ -50,15 +55,14 @@ public class VideosFragment extends BaseFragment implements  android.view.View.O
 	private boolean isList = true;// 当前界面状态
 
 	public VideosFragment(ImageButton dpgridView) {
-		// TODO Auto-generated constructor stub
+		// 通过参数拿到mGridView的控件
 		mGridView = dpgridView;
 	}
-	
+
 	@Override
 	public View initView() {
 		View view = View.inflate(mActivity, R.layout.tab02, null);
 		ViewUtils.inject(this, view);
-		mGridView.setVisibility(View.VISIBLE);
 		mGridView.setOnClickListener(this);
 		return view;
 	}
@@ -181,6 +185,5 @@ public class VideosFragment extends BaseFragment implements  android.view.View.O
 			break;
 		}
 	}
-
 
 }

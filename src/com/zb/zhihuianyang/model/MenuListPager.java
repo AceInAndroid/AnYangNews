@@ -1,10 +1,9 @@
 package com.zb.zhihuianyang.model;
 
-
-
 import java.util.ArrayList;
 
-import com.zb.zhihuianyang.MainActivity ;
+import com.zb.zhihuianyang.MainActivity;
+
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -13,6 +12,8 @@ import com.zb.zhihuianyang.R;
 import com.zb.zhihuianyang.base.BaseFragment;
 import com.zb.zhihuianyang.domain.NewsMenuData.NewsDatas;
 
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -27,37 +28,57 @@ public class MenuListPager extends BaseFragment {
 	private ListView menuListView;
 	private ArrayList<NewsDatas> mMenuList;
 	private int mCurrrentPos;
+	private MainActivity mainUI;
+	private MenuAdapter mAdapter;
 
 	public View initView() {
 		View view = View.inflate(mActivity, R.layout.fragment_left_menu, null);
 		ViewUtils.inject(this, view);
-		
+
 		menuListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				
+
 				mCurrrentPos = position;
+
+				mAdapter.notifyDataSetChanged();
+				
+				
+				setCurrentMenuDetailPager(position);
+				// 隐藏侧边栏
+				toggle();
 			}
 		});
 		return view;
 	}
+	
+	/**
+	 * 设置菜单页面
+	 * @param position
+	 */
+	protected void setCurrentMenuDetailPager(int position) {
+		//1. 拿到MainActivity对象 2.通过MainActivity对象的方法设置要显示的页面
+		mainUI = (MainActivity) mActivity;
+		mainUI.setCurrentMenuDetailPager(position);
+	}
+
 	/**
 	 * 侧边栏展开或者收起的方法
 	 */
 	public void toggle() {
-		MainActivity mainUI = (MainActivity) mActivity;
+//		mainUI = (MainActivity) mActivity;
 		SlidingMenu slidingMenu = mainUI.getSlidingMenu();
 		slidingMenu.toggle();// 开关(如果状态为开,它就关;如果状态为关,它就开)
 	}
-	 
-	public void setData(ArrayList<NewsDatas> data){
 
+	public void setData(ArrayList<NewsDatas> data) {
+		 mAdapter=new MenuAdapter();
 		mMenuList = data;
 
-		menuListView.setAdapter(new MenuAdapter());
+		menuListView.setAdapter(mAdapter);
 	}
-	
+
 	class MenuAdapter extends BaseAdapter {
 
 		@Override
@@ -77,11 +98,10 @@ public class MenuListPager extends BaseFragment {
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			
-			View view = View.inflate(mActivity, R.layout.list_item_left_menu,
-					null);
+
+			View view = View.inflate(mActivity, R.layout.list_item_left_menu, null);
 			TextView tvMenu = (TextView) view.findViewById(R.id.tv_menu);
- 
+
 			NewsDatas data = getItem(position);
 			tvMenu.setText(data.title);
 
@@ -92,7 +112,7 @@ public class MenuListPager extends BaseFragment {
 				// 其他item都是白色
 				tvMenu.setEnabled(false);
 			}
-			
+
 			return view;
 		}
 

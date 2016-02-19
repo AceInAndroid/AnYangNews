@@ -1,5 +1,6 @@
 package com.zb.zhihuianyang;
 
+
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 import com.zb.zhihuianyang.model.FindFragment;
@@ -17,6 +18,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.Window;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
@@ -36,7 +38,7 @@ public class MainActivity extends SlidingFragmentActivity implements OnClickList
 	private Fragment mTab04;
 
 	private ImageButton topMenu;
-	
+
 	public ImageButton dpgridView;
 
 	// 给每个fragment设置tag
@@ -45,9 +47,9 @@ public class MainActivity extends SlidingFragmentActivity implements OnClickList
 	private static final String TAG_VIDEO = "VIDEO";
 	private static final String TAG_FIND = "FIND";
 	private static final String TAG_ME = "ME";
-	
+	private FrameLayout id_content;
+	private FragmentTransaction transaction;
 
-	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// 初始化
@@ -78,12 +80,16 @@ public class MainActivity extends SlidingFragmentActivity implements OnClickList
 	private void initView() {
 		// 初始化控件
 		mNews = (LinearLayout) findViewById(R.id.news);
+		mNews.setBackgroundColor(Color.parseColor("#E6E6E6"));
 		mVideos = (LinearLayout) findViewById(R.id.video);
 		mFind = (LinearLayout) findViewById(R.id.find);
 		mMe = (LinearLayout) findViewById(R.id.me);
+		initfragment();
 		topMenu = (ImageButton) findViewById(R.id.top_menu);
 		dpgridView = (ImageButton) findViewById(R.id.btn_display);
-
+		id_content = (FrameLayout) findViewById(R.id.id_content);
+		dpgridView.setVisibility(View.GONE);
+		
 		// 初始化侧滑菜单
 		// 添加侧边栏
 
@@ -92,11 +98,11 @@ public class MainActivity extends SlidingFragmentActivity implements OnClickList
 		// 全屏触摸
 		slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
 		// 屏幕预留250像素
-		slidingMenu.setBehindOffset(250);
-		initfragment();
-
+		slidingMenu.setBehindOffset(400);
+		
+		
 	}
-	
+
 	private void initfragment() {
 		// TODO Auto-generated method stub
 		// 获得事务
@@ -115,27 +121,30 @@ public class MainActivity extends SlidingFragmentActivity implements OnClickList
 		switch (v.getId()) {
 		case R.id.news:
 			setFrag(0);
-
+			
 			mNews.setBackgroundColor(Color.parseColor("#E6E6E6"));
 			break;
 		case R.id.video:
 			setFrag(1);
+			
 			mVideos.setBackgroundColor(Color.parseColor("#E6E6E6"));
 			break;
 		case R.id.find:
 			setFrag(2);
+			
 			mFind.setBackgroundColor(Color.parseColor("#E6E6E6"));
 			break;
 
 		case R.id.me:
 			setFrag(3);
 			mMe.setBackgroundColor(Color.parseColor("#E6E6E6"));
+			
 			break;
 
 		case R.id.top_menu:
-			getLeftMenuFragment().toggle();
-
+			this.getLeftMenuFragment().toggle();
 			break;
+			
 
 		default:
 			break;
@@ -154,7 +163,7 @@ public class MainActivity extends SlidingFragmentActivity implements OnClickList
 	private void setFrag(int i) {
 		// TODO Auto-generated method stub
 		FragmentManager fm = getSupportFragmentManager();
-		FragmentTransaction transaction = fm.beginTransaction();
+		transaction = fm.beginTransaction();
 		setFragmenthide(transaction);
 		switch (i) {
 		case 0:
@@ -231,4 +240,33 @@ public class MainActivity extends SlidingFragmentActivity implements OnClickList
 		return fragment;
 	}
 
+	public void setCurrentMenuDetailPager(int position) {
+		
+		
+		switch (position) {
+		case 0:
+			this.setFrag(0);
+			mNews.setBackgroundColor(Color.parseColor("#E6E6E6"));
+			break;
+		case 1:
+			this.setFrag(2);
+			mFind.setBackgroundColor(Color.parseColor("#E6E6E6"));
+			break;
+		case 2:
+			this.setFrag(1);
+			mVideos.setBackgroundColor(Color.parseColor("#E6E6E6"));
+			break;
+		case 3:
+			this.setFrag(3);
+			mMe.setBackgroundColor(Color.parseColor("#E6E6E6"));
+			break;
+
+		default:
+			break;
+		}
+	}
+
+
+
+	
 }

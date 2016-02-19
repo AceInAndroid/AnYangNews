@@ -34,6 +34,7 @@ import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -42,6 +43,7 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnAttachStateChangeListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
@@ -67,6 +69,8 @@ public class TabDetailPagers extends BaseDetailPager {
 	private String mUrl;
 	// 下一页的链接
 	private String mMoreUrl;
+	//图片轮播handler
+	private Handler mHandler;
 
 	@ViewInject(R.id.tab_detailpager_viewpager)
 	private TopNewsViewPager mViewPager;
@@ -285,6 +289,54 @@ public class TabDetailPagers extends BaseDetailPager {
 				newsListViewDataAdapter = new MyListViewAdapter();
 				mListView.setAdapter(newsListViewDataAdapter);
 			}
+			//图片轮播效果
+			if (mHandler == null) {
+				mHandler = new Handler() {
+					public void handleMessage(android.os.Message msg) {
+						int currentItem = mViewPager.getCurrentItem();
+
+						if (currentItem < mTopNewsList.size() - 1) {
+							currentItem++;
+						} else {
+							currentItem = 0;
+						}
+
+						mViewPager.setCurrentItem(currentItem);
+
+						mHandler.sendEmptyMessageDelayed(0, 2000);
+					};
+				};
+
+				// 发送延时消息延时2秒切换广告条
+				mHandler.sendEmptyMessageDelayed(0, 2000);
+				
+			
+				mViewPager.setOnTouchListener(new OnTouchListener(){
+
+					@Override
+					public boolean onTouch(View v, MotionEvent event) {
+						switch (event.getAction()) {
+						case MotionEvent.ACTION_DOWN:
+							System.out.println("ACTION_DOWN");
+							// 删除所有消息
+							mHandler.removeCallbacksAndMessages(null);
+							break;
+						case MotionEvent.ACTION_CANCEL:// 事件取消(当按下后,然后移动下拉刷新,导致抬起后无法响应ACTION_UP,
+														// 但此时会响应ACTION_CANCEL,也需要继续播放轮播条)
+						case MotionEvent.ACTION_UP:
+							// 延时2秒切换广告条
+							mHandler.sendEmptyMessageDelayed(0, 2000);
+							break;
+						default:
+							break;
+						}
+						return false;
+					}
+					
+				});
+			
+			}
+				
 		} else {
 			// 加载更多
 			ArrayList<News> moreData = mNewsDatas.data.news;
