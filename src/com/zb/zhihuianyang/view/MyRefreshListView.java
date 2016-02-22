@@ -108,6 +108,7 @@ public class MyRefreshListView extends ListView
 		// 设置滑动监听
 		this.setOnScrollListener(this);
 	}
+	
 
 	@Override
 	public boolean onTouchEvent(MotionEvent ev) {

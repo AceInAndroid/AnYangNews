@@ -38,7 +38,7 @@ public class TopNewsViewPager extends ViewPager {
 		case MotionEvent.ACTION_DOWN:
 			startX = (int) ev.getX();
 			startY = (int) ev.getY();
-			System.out.println("开始位置:" +startX + "," +startY );
+//			System.out.println("开始位置:" +startX + "," +startY );
 			// 请求父控件及祖宗控件不要拦截事件
 			getParent().requestDisallowInterceptTouchEvent(true);
 			break;
@@ -49,8 +49,8 @@ public class TopNewsViewPager extends ViewPager {
 
 			int dx = endX - startX;
 			int dy = endY - startY;
-			System.out.println( "结束位置: " + endX + "," +endY );
-			System.out.println( "间距:"  + dx  );
+//			System.out.println( "结束位置: " + endX + "," +endY );
+//			System.out.println( "间距:"  + dx  );
 
 			if (Math.abs(dx) > Math.abs(dy)) {// 左右划
 				if (dx > 0) {// 向右滑动

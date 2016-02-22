@@ -15,12 +15,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.Window;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 /* 
  * ace in 20160207
@@ -49,6 +51,7 @@ public class MainActivity extends SlidingFragmentActivity implements OnClickList
 	private static final String TAG_ME = "ME";
 	private FrameLayout id_content;
 	private FragmentTransaction transaction;
+	
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -60,7 +63,8 @@ public class MainActivity extends SlidingFragmentActivity implements OnClickList
 		initView();
 		initEvents();
 		setFrag(0);
-
+		
+		
 	}
 
 	/**
@@ -84,7 +88,7 @@ public class MainActivity extends SlidingFragmentActivity implements OnClickList
 		mVideos = (LinearLayout) findViewById(R.id.video);
 		mFind = (LinearLayout) findViewById(R.id.find);
 		mMe = (LinearLayout) findViewById(R.id.me);
-		initfragment();
+		
 		topMenu = (ImageButton) findViewById(R.id.top_menu);
 		dpgridView = (ImageButton) findViewById(R.id.btn_display);
 		id_content = (FrameLayout) findViewById(R.id.id_content);
@@ -100,18 +104,19 @@ public class MainActivity extends SlidingFragmentActivity implements OnClickList
 		// 屏幕预留250像素
 		slidingMenu.setBehindOffset(400);
 		
-		
-	}
-
-	private void initfragment() {
-		// TODO Auto-generated method stub
 		// 获得事务
 		FragmentManager fm = getSupportFragmentManager();
 		// 开启事务
 		FragmentTransaction transaction = fm.beginTransaction();
 		transaction.replace(R.id.fl_left_menu, new MenuListPager(), TAG_LEFT_MENU);
 		transaction.commit();
+		
 	}
+
+//	private void initfragment() {
+//
+//
+//	}
 
 	// 设置点击事件
 	@Override
@@ -126,7 +131,7 @@ public class MainActivity extends SlidingFragmentActivity implements OnClickList
 			break;
 		case R.id.video:
 			setFrag(1);
-			
+			dpgridView.setVisibility(View.VISIBLE);
 			mVideos.setBackgroundColor(Color.parseColor("#E6E6E6"));
 			break;
 		case R.id.find:
@@ -142,7 +147,7 @@ public class MainActivity extends SlidingFragmentActivity implements OnClickList
 			break;
 
 		case R.id.top_menu:
-			this.getLeftMenuFragment().toggle();
+				this.getLeftMenuFragment().toggle();
 			break;
 			
 
@@ -240,9 +245,13 @@ public class MainActivity extends SlidingFragmentActivity implements OnClickList
 		return fragment;
 	}
 
+	/**
+	 * 响应菜单页的方法
+	 * @param position
+	 */
 	public void setCurrentMenuDetailPager(int position) {
 		
-		
+		resetBackground();
 		switch (position) {
 		case 0:
 			this.setFrag(0);
@@ -254,6 +263,7 @@ public class MainActivity extends SlidingFragmentActivity implements OnClickList
 			break;
 		case 2:
 			this.setFrag(1);
+			dpgridView.setVisibility(View.VISIBLE);
 			mVideos.setBackgroundColor(Color.parseColor("#E6E6E6"));
 			break;
 		case 3:
