@@ -10,6 +10,7 @@ import com.zb.zhihuianyang.model.NewsFragment;
 import com.zb.zhihuianyang.model.VideosFragment;
 
 import android.graphics.Color;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -132,6 +133,7 @@ public class MainActivity extends SlidingFragmentActivity implements OnClickList
 		switch (v.getId()) {
 		case R.id.news:
 			setFrag(0);
+			dpgridView.setVisibility(View.GONE);
 			
 			mNews.setBackgroundColor(Color.parseColor("#E6E6E6"));
 			break;
@@ -142,12 +144,13 @@ public class MainActivity extends SlidingFragmentActivity implements OnClickList
 			break;
 		case R.id.find:
 			setFrag(2);
-			
+			dpgridView.setVisibility(View.GONE);
 			mFind.setBackgroundColor(Color.parseColor("#E6E6E6"));
 			break;
 
 		case R.id.me:
 			setFrag(3);
+			dpgridView.setVisibility(View.GONE);
 			mMe.setBackgroundColor(Color.parseColor("#E6E6E6"));
 			
 			break;

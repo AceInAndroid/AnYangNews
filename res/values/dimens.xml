@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="TabDetailPager_TopNews_height"></dimen>
+    <dimen name="TabDetailPager_TopNews_height">200dp</dimen>
+    
     
     
 </resources>
