@@ -3,7 +3,7 @@
 ###本项目包含以下知识点：
 ####1`、` 新手引导页的滑动圆点实现,需要通过全局的视图树
     ivRedPoint.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
-    		@Override
+        	@Override
 			public void onGlobalLayout() {
 				
 				// //移除监听
@@ -17,22 +17,22 @@
         
 --------------------------------------------------------
 ###2`、`动画: 
-##### RotateAnimation,ScaleAnimation ,AlphaAnimation.
-#####动画集合:AnimationSet
-#####动画状态监听:setAnimationListener
-#####XML属性动画 rotate
+##### * RotateAnimation,ScaleAnimation ,AlphaAnimation.
+#####* 动画集合:AnimationSet
+#####* 动画状态监听:setAnimationListener
+#####* XML属性动画 rotate
 -----------------------------------------------------
 ###3`、`selector的使用,selector的状态和属性设置
 -----------------------------
 ###4`、`框架:
 ####① XUtils:
-#####- ViewUtils模块 : 注解实现UI、资源、和事件绑定
-#####- HttpUtils模块 : Get请求服务器获取JSON信息
-#####- BitmapUtils模块
+##### * ViewUtils模块 : 注解实现UI、资源、和事件绑定
+##### * HttpUtils模块 : Get请求服务器获取JSON信息
+##### * BitmapUtils模块
 
 ####②GSON
 
-#####- GSON解析JSON数据
+#####* GSON解析JSON数据
 
 ####③SlidingMenu: 设置侧边栏 
 
@@ -142,7 +142,11 @@
 ###6 微信微博等主要平台的一键分享实现
 
 ###7 webView设置
+###8 图片轮播器 用到了handlerdelayed发送延迟消息
 
 ------------------------------------------------
-##这是我学习安卓用于练手的项目 难度系数不是很高 还有很多可以优化的地方,希望以后再工作中学到更多的知识来优化这个项目让它变得
-##更有学习价值 更多教程请移步我的博客 (http://www.cnblogs.com/AceIsSunshineRain/)
+##PS:
+###这是我学习安卓用于练手的项目 难度系数不是很高 还有很多可以优化的地方,希望以后再工作中学到更多的知识来优化这个项目让它变得
+###更有学习价值分享给大家. 更多教程请移步我的博客[AceIsSunshineRain] (http://www.cnblogs.com/AceIsSunshineRain/)
+###自己实现了一个三级缓存但xUtils已经实现了 所以就没有加入项目里 但写在博客里了 大家可以去看 还有一些项目中遇到的问题也在博客中写出
+###关于要自学安卓的也可以在博客中站内信我 我可以把学习的路和资源告诉你,加油!

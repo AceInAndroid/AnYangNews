@@ -440,6 +440,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int vpi__light_theme=0x7f040014;
     }
     public static final class dimen {
+        public static final int TabDetailPager_TopNews_height=0x7f07000d;
         public static final int default_circle_indicator_radius=0x7f070000;
         public static final int default_circle_indicator_stroke_width=0x7f070001;
         public static final int default_line_indicator_gap_width=0x7f070003;

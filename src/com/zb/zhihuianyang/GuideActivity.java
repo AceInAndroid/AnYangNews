@@ -4,6 +4,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.zb.zhihuianyang.utils.DensityUtils;
 import com.zb.zhihuianyang.utils.PrefUtils;
 
 import android.app.Activity;
@@ -68,7 +69,7 @@ public class GuideActivity extends Activity implements android.view.View.OnClick
 					LinearLayout.LayoutParams.WRAP_CONTENT);
 
 			if (i > 0) {
-				params.leftMargin = 10;
+				params.leftMargin = DensityUtils.dpToPx(8, this);
 			}
 			pointView.setLayoutParams(params);
 			llContainer.addView(pointView);

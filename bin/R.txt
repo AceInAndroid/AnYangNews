@@ -69,6 +69,7 @@ int color vpi__bright_foreground_inverse_holo_dark 0x7f040006
 int color vpi__bright_foreground_inverse_holo_light 0x7f040007
 int color vpi__dark_theme 0x7f040013
 int color vpi__light_theme 0x7f040014
+int dimen TabDetailPager_TopNews_height 0x7f07000d
 int dimen default_circle_indicator_radius 0x7f070000
 int dimen default_circle_indicator_stroke_width 0x7f070001
 int dimen default_line_indicator_gap_width 0x7f070003

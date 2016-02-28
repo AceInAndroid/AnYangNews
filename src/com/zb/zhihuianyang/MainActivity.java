@@ -17,6 +17,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.Window;
+import android.view.WindowManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
@@ -51,6 +52,7 @@ public class MainActivity extends SlidingFragmentActivity implements OnClickList
 	private static final String TAG_ME = "ME";
 	private FrameLayout id_content;
 	private FragmentTransaction transaction;
+	private SlidingMenu slidingMenu;
 	
 
 	@Override
@@ -94,15 +96,19 @@ public class MainActivity extends SlidingFragmentActivity implements OnClickList
 		id_content = (FrameLayout) findViewById(R.id.id_content);
 		dpgridView.setVisibility(View.GONE);
 		
+		//拿到屏幕的宽高
+		WindowManager windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
+		int screenWidth =windowManager.getDefaultDisplay().getWidth();
+		
 		// 初始化侧滑菜单
 		// 添加侧边栏
 
 		setBehindContentView(R.layout.left_menu);
-		SlidingMenu slidingMenu = getSlidingMenu();
+		slidingMenu = getSlidingMenu();
 		// 全屏触摸
 		slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-		// 屏幕预留250像素
-		slidingMenu.setBehindOffset(400);
+		// 屏幕预留
+		slidingMenu.setBehindOffset((int) (screenWidth*0.625));
 		
 		// 获得事务
 		FragmentManager fm = getSupportFragmentManager();
@@ -147,7 +153,7 @@ public class MainActivity extends SlidingFragmentActivity implements OnClickList
 			break;
 
 		case R.id.top_menu:
-				this.getLeftMenuFragment().toggle();
+			slidingMenu.toggle();
 			break;
 			
 
